@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.palette.graphics.Palette
 import java.io.IOException
+import androidx.core.graphics.createBitmap
 
 /** Utility class for manipulating bitmaps  */
 object BitmapUtil {
@@ -132,7 +133,7 @@ object BitmapUtil {
     // Create a new Bitmap with the width and height of the background
     val width = background.width
     val height = background.height
-    val mergedBitmap = Bitmap.createBitmap(width, height, background.config)
+    val mergedBitmap = createBitmap(width, height, background.config!!)
 
     // Create a Canvas object with the new Bitmap
     val canvas = Canvas(mergedBitmap).apply {

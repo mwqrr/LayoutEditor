@@ -26,7 +26,7 @@ abstract class FilePicker(private val actvty: AppCompatActivity) {
     // Create an instance of ActivityResultContracts.GetContent and register it with actvty
     // when the result is returned, call the onPickFile method with the returned uri
     this.getFile =
-      actvty.registerForActivityResult<String, Uri>(
+      actvty.registerForActivityResult(
         ActivityResultContracts.GetContent()
       ) { onPickFile(it) }
 
