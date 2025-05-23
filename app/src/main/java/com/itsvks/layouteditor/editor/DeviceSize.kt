@@ -1,7 +1,7 @@
 package com.itsvks.layouteditor.editor
 
 enum class DeviceSize {
-  SMALL,
-  MEDIUM,
-  LARGE
+    SMALL,
+    MEDIUM,
+    LARGE
 }

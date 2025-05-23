@@ -1,36 +1,37 @@
 package com.itsvks.layouteditor.editor.palette.widgets;
 
-import android.view.TextureView;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.view.TextureView;
+
 import com.itsvks.layouteditor.utils.Constants;
 import com.itsvks.layouteditor.utils.Utils;
 
 public class TextureViewDesign extends TextureView {
-  
-  private boolean drawStrokeEnabled;
-  private boolean isBlueprint;
 
-  public TextureViewDesign(Context context) {
-    super(context);
-  }
+    private boolean drawStrokeEnabled;
+    private boolean isBlueprint;
 
-  @Override
-  protected void dispatchDraw(Canvas canvas) {
-    super.dispatchDraw(canvas);
+    public TextureViewDesign(Context context) {
+        super(context);
+    }
 
-    if (drawStrokeEnabled)
-      Utils.drawDashPathStroke(
-          this, canvas, isBlueprint ? Constants.BLUEPRINT_DASH_COLOR : Constants.DESIGN_DASH_COLOR);
-  }
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
 
-  public void setStrokeEnabled(boolean enabled) {
-    drawStrokeEnabled = enabled;
-    invalidate();
-  }
+        if (drawStrokeEnabled)
+            Utils.drawDashPathStroke(
+                this, canvas, isBlueprint ? Constants.BLUEPRINT_DASH_COLOR : Constants.DESIGN_DASH_COLOR);
+    }
 
-  public void setBlueprint(boolean isBlueprint) {
-    this.isBlueprint = isBlueprint;
-    invalidate();
-  }
+    public void setStrokeEnabled(boolean enabled) {
+        drawStrokeEnabled = enabled;
+        invalidate();
+    }
+
+    public void setBlueprint(boolean isBlueprint) {
+        this.isBlueprint = isBlueprint;
+        invalidate();
+    }
 }

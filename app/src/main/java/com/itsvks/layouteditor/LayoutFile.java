@@ -12,67 +12,66 @@ import org.jetbrains.annotations.Contract;
 import java.io.File;
 
 public class LayoutFile implements Parcelable {
-  private String path;
-  public String name;
+    public static final Parcelable.Creator<LayoutFile> CREATOR =
+        new Parcelable.Creator<>() {
+            @NonNull
+            @Contract("_ -> new")
+            public LayoutFile createFromParcel(Parcel in) {
+                return new LayoutFile(in);
+            }
 
-  public LayoutFile(String path) {
-    this.path = path;
-    this.name = FileUtil.getLastSegmentFromPath(path);
-  }
+            @NonNull
+            @Contract(value = "_ -> new", pure = true)
+            public LayoutFile[] newArray(int size) {
+                return new LayoutFile[size];
+            }
+        };
+    public String name;
+    private String path;
 
-  public void rename(String newPath) {
-    File newFile = new File(newPath);
-    File oldFile = new File(getPath());
-    oldFile.renameTo(newFile);
+    public LayoutFile(String path) {
+        this.path = path;
+        this.name = FileUtil.getLastSegmentFromPath(path);
+    }
 
-    path = newPath;
-    name = FileUtil.getLastSegmentFromPath(path);
-  }
+    private LayoutFile(@NonNull Parcel parcel) {
+        path = parcel.readString();
+        name = parcel.readString();
+    }
 
-  public void saveLayout(String content) {
-    FileUtil.writeFile(path, content);
-  }
+    public void rename(String newPath) {
+        File newFile = new File(newPath);
+        File oldFile = new File(getPath());
+        oldFile.renameTo(newFile);
 
-  public String getPath() {
-    return path;
-  }
+        path = newPath;
+        name = FileUtil.getLastSegmentFromPath(path);
+    }
 
-  public String getName() {
-    return name;
-  }
+    public void saveLayout(String content) {
+        FileUtil.writeFile(path, content);
+    }
 
-  public String read() {
-    return FileUtil.readFile(path);
-  }
+    public String getPath() {
+        return path;
+    }
 
-  @Override
-  public int describeContents() {
-    return 0;
-  }
+    public String getName() {
+        return name;
+    }
 
-  @Override
-  public void writeToParcel(@NonNull Parcel parcel, int flags) {
-    parcel.writeString(path);
-    parcel.writeString(name);
-  }
+    public String read() {
+        return FileUtil.readFile(path);
+    }
 
-  public static final Parcelable.Creator<LayoutFile> CREATOR =
-    new Parcelable.Creator<>() {
-      @NonNull
-      @Contract("_ -> new")
-      public LayoutFile createFromParcel(Parcel in) {
-        return new LayoutFile(in);
-      }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-      @NonNull
-      @Contract(value = "_ -> new", pure = true)
-      public LayoutFile[] newArray(int size) {
-        return new LayoutFile[size];
-      }
-    };
-
-  private LayoutFile(@NonNull Parcel parcel) {
-    path = parcel.readString();
-    name = parcel.readString();
-  }
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int flags) {
+        parcel.writeString(path);
+        parcel.writeString(name);
+    }
 }

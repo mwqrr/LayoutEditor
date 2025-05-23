@@ -1,6 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:override="true"
-    tools:ignore="MissingTranslation,PrivateResource,ExtraTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation,PrivateResource,ExtraTranslation" tools:override="true">
     <string name="app_name">Layout Editor</string>
     <string name="app_slogan">Buat UI Keren!</string>
     <string name="home">UTAMA</string>
@@ -117,5 +115,5 @@
     <string name="small">Kecil</string>
     <string name="medium">Sedang</string>
     <string name="large">Besar</string>
-  <string name="hmmm">¯⁠\\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯</string>
+    <string name="hmmm">¯⁠\\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯</string>
 </resources>

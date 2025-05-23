@@ -5,7 +5,7 @@
     <solid android:color="?attr/colorSurface" />
 
     <corners
-        android:topLeftRadius="@dimen/cornerHigh"
-        android:bottomLeftRadius="@dimen/cornerHigh"/>
+        android:bottomLeftRadius="@dimen/cornerHigh"
+        android:topLeftRadius="@dimen/cornerHigh" />
 
 </shape>

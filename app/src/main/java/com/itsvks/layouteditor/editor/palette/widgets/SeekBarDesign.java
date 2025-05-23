@@ -4,41 +4,42 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.widget.SeekBar;
+
 import com.itsvks.layouteditor.utils.Constants;
 import com.itsvks.layouteditor.utils.Utils;
 
 @SuppressLint("AppCompatCustomView")
 public class SeekBarDesign extends SeekBar {
 
-  private boolean drawStrokeEnabled;
-  private boolean isBlueprint;
+    private boolean drawStrokeEnabled;
+    private boolean isBlueprint;
 
-  public SeekBarDesign(Context context) {
-    super(context);
-  }
+    public SeekBarDesign(Context context) {
+        super(context);
+    }
 
-  @Override
-  protected void dispatchDraw(Canvas canvas) {
-    super.dispatchDraw(canvas);
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
 
-    if (drawStrokeEnabled)
-      Utils.drawDashPathStroke(
-          this, canvas, isBlueprint ? Constants.BLUEPRINT_DASH_COLOR : Constants.DESIGN_DASH_COLOR);
-  }
+        if (drawStrokeEnabled)
+            Utils.drawDashPathStroke(
+                this, canvas, isBlueprint ? Constants.BLUEPRINT_DASH_COLOR : Constants.DESIGN_DASH_COLOR);
+    }
 
-  public void setStrokeEnabled(boolean enabled) {
-    drawStrokeEnabled = enabled;
-    invalidate();
-  }
-  
-  @Override
-  public void draw(Canvas canvas) {
-    if (isBlueprint) Utils.drawDashPathStroke(this, canvas, Constants.BLUEPRINT_DASH_COLOR);
-    else super.draw(canvas);
-  }
+    public void setStrokeEnabled(boolean enabled) {
+        drawStrokeEnabled = enabled;
+        invalidate();
+    }
 
-  public void setBlueprint(boolean isBlueprint) {
-    this.isBlueprint = isBlueprint;
-    invalidate();
-  }
+    @Override
+    public void draw(Canvas canvas) {
+        if (isBlueprint) Utils.drawDashPathStroke(this, canvas, Constants.BLUEPRINT_DASH_COLOR);
+        else super.draw(canvas);
+    }
+
+    public void setBlueprint(boolean isBlueprint) {
+        this.isBlueprint = isBlueprint;
+        invalidate();
+    }
 }

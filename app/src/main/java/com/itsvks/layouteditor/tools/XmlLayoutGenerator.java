@@ -20,106 +20,105 @@ import java.util.HashMap;
 import java.util.List;
 
 public class XmlLayoutGenerator {
-  final StringBuilder builder = new StringBuilder();
-  String TAB = "\t";
+    final StringBuilder builder = new StringBuilder();
+    String TAB = "\t";
 
-  boolean useSuperclasses;
+    boolean useSuperclasses;
 
-  public String generate(@NonNull DesignEditor editor, boolean useSuperclasses) {
-    this.useSuperclasses = useSuperclasses;
+    public String generate(@NonNull DesignEditor editor, boolean useSuperclasses) {
+        this.useSuperclasses = useSuperclasses;
 
-    if (editor.getChildCount() == 0) {
-      return "";
-    }
-    builder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-    builder.append(
-      """
-        <!--
-        \tWelcome to LayoutEditor!
-
-        \tWe are proud to present our innovative layout generator app that
-        \tallows users to create and customize stunning layouts in no time.
-        \tWith LayoutEditor, you can easily create beautiful and custom
-        \tlayouts that are tailored to fit your unique needs.
-
-        \tThank you for using LayoutEditor and we hope you enjoy our app!
-        -->
-
-        """);
-
-    return peek(editor.getChildAt(0), editor.getViewAttributeMap(), 0);
-  }
-
-  private String peek(View view, HashMap<View, AttributeMap> attributeMap, int depth) {
-    if (attributeMap == null || view == null) return "";
-    String indent = getIndent(depth);
-    int nextDepth = depth;
-
-    String className = getClassName(view, indent);
-
-    if (depth == 0) {
-      builder.append(TAB).append("xmlns:android=\"http://schemas.android.com/apk/res/android\"\n");
-      builder.append(TAB).append("xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n");
-    }
-
-    List<String> keys =
-      (attributeMap.get(view) != null) ? attributeMap.get(view).keySet() : new ArrayList<>();
-    List<String> values =
-      (attributeMap.get(view) != null) ? attributeMap.get(view).values() : new ArrayList<>();
-    for (String key : keys) {
-      // If the value contains special characters it will be converted
-      builder.append(TAB).append(indent).append(key).append("=\"").append(StringEscapeUtils.escapeXml11(attributeMap.get(view).getValue(key))).append("\"\n");
-    }
-
-    builder.deleteCharAt(builder.length() - 1);
-
-    if (view instanceof ViewGroup) {
-      ViewGroup group = (ViewGroup) view;
-      if (!(group instanceof CalendarView)
-        && !(group instanceof SearchView)
-        && !(group instanceof NavigationView)
-        && !(group instanceof BottomNavigationView)
-        && !(group instanceof TabLayout)) {
-        nextDepth++;
-
-        if (group.getChildCount() > 0) {
-          builder.append(">\n\n");
-
-          for (int i = 0; i < group.getChildCount(); i++) {
-            peek(group.getChildAt(i), attributeMap, nextDepth);
-          }
-
-          builder.append(indent).append("</").append(className).append(">\n\n");
-        } else {
-          builder.append(" />\n\n");
+        if (editor.getChildCount() == 0) {
+            return "";
         }
-      } else {
-        builder.append(" />\n\n");
-      }
-    } else {
-      builder.append(" />\n\n");
+        builder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
+        builder.append(
+            """
+                <!--
+                \tWelcome to LayoutEditor!
+                
+                \tWe are proud to present our innovative layout generator app that
+                \tallows users to create and customize stunning layouts in no time.
+                \tWith LayoutEditor, you can easily create beautiful and custom
+                \tlayouts that are tailored to fit your unique needs.
+                
+                \tThank you for using LayoutEditor and we hope you enjoy our app!
+                -->
+                
+                """);
+
+        return peek(editor.getChildAt(0), editor.getViewAttributeMap(), 0);
     }
 
-    return builder.toString().trim();
-  }
+    private String peek(View view, HashMap<View, AttributeMap> attributeMap, int depth) {
+        if (attributeMap == null || view == null) return "";
+        String indent = getIndent(depth);
+        int nextDepth = depth;
 
-  @NonNull
-  private String getClassName(View view, String indent) {
-    String className =
-      useSuperclasses ? view.getClass().getSuperclass().getName() : view.getClass().getName();
+        String className = getClassName(view, indent);
 
-    if (useSuperclasses) {
-      if (className.startsWith("android.widget.")) {
-        className = className.replace("android.widget.", "");
-      }
+        if (depth == 0) {
+            builder.append(TAB).append("xmlns:android=\"http://schemas.android.com/apk/res/android\"\n");
+            builder.append(TAB).append("xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n");
+        }
+
+        List<String> keys =
+            (attributeMap.get(view) != null) ? attributeMap.get(view).keySet() : new ArrayList<>();
+        List<String> values =
+            (attributeMap.get(view) != null) ? attributeMap.get(view).values() : new ArrayList<>();
+        for (String key : keys) {
+            // If the value contains special characters it will be converted
+            builder.append(TAB).append(indent).append(key).append("=\"").append(StringEscapeUtils.escapeXml11(attributeMap.get(view).getValue(key))).append("\"\n");
+        }
+
+        builder.deleteCharAt(builder.length() - 1);
+
+        if (view instanceof ViewGroup group) {
+            if (!(group instanceof CalendarView)
+                && !(group instanceof SearchView)
+                && !(group instanceof NavigationView)
+                && !(group instanceof BottomNavigationView)
+                && !(group instanceof TabLayout)) {
+                nextDepth++;
+
+                if (group.getChildCount() > 0) {
+                    builder.append(">\n\n");
+
+                    for (int i = 0; i < group.getChildCount(); i++) {
+                        peek(group.getChildAt(i), attributeMap, nextDepth);
+                    }
+
+                    builder.append(indent).append("</").append(className).append(">\n\n");
+                } else {
+                    builder.append(" />\n\n");
+                }
+            } else {
+                builder.append(" />\n\n");
+            }
+        } else {
+            builder.append(" />\n\n");
+        }
+
+        return builder.toString().trim();
     }
 
-    builder.append(indent).append("<").append(className).append("\n");
-    return className;
-  }
+    @NonNull
+    private String getClassName(View view, String indent) {
+        String className =
+            useSuperclasses ? view.getClass().getSuperclass().getName() : view.getClass().getName();
 
-  @NonNull
-  private String getIndent(int depth) {
-    return TAB.repeat(depth);
-  }
+        if (useSuperclasses) {
+            if (className.startsWith("android.widget.")) {
+                className = className.replace("android.widget.", "");
+            }
+        }
+
+        builder.append(indent).append("<").append(className).append("\n");
+        return className;
+    }
+
+    @NonNull
+    private String getIndent(int depth) {
+        return TAB.repeat(depth);
+    }
 }

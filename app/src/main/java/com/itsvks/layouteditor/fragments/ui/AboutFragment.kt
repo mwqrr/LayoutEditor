@@ -12,21 +12,21 @@ import com.itsvks.layouteditor.databinding.FragmentAboutBinding
 import com.itsvks.layouteditor.utils.Constants
 
 class AboutFragment : Fragment() {
-  private lateinit var binding: FragmentAboutBinding
+    private lateinit var binding: FragmentAboutBinding
 
-  override fun onCreateView(
-    inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-  ): View {
-    binding = FragmentAboutBinding.inflate(inflater, container, false)
-    return binding.root
-  }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentAboutBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-  @SuppressLint("SetTextI18n")
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
+    @SuppressLint("SetTextI18n")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    binding.details.text =
-      getString(string.share_description, Constants.GITHUB_URL)
-    binding.version.text = "v${BuildConfig.VERSION_NAME}"
-  }
+        binding.details.text =
+            getString(string.share_description, Constants.GITHUB_URL)
+        binding.version.text = "v${BuildConfig.VERSION_NAME}"
+    }
 }

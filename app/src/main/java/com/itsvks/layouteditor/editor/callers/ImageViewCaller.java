@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class ImageViewCaller {
 
-    private static HashMap<String, ImageView.ScaleType> scaleTypes = new HashMap<>();
+    private static final HashMap<String, ImageView.ScaleType> scaleTypes = new HashMap<>();
 
     static {
         scaleTypes.put("fitXY", ImageView.ScaleType.FIT_XY);
